@@ -31,7 +31,8 @@ async function run() {
         await client.connect();
 
         const menuCollection = client.db('bistrobossDB').collection('menu');
-        const reviewsCollection = client.db('bistrobossDB').collection('reviews')
+        const reviewsCollection = client.db('bistrobossDB').collection('reviews');
+        const cartCollection = client.db('bistrobossDB').collection('carts')
 
         app.get('/menu' , async(req ,res)=>{
             const result = await menuCollection.find().toArray();
@@ -42,6 +43,13 @@ async function run() {
             res.send(result);
         })
 
+        app.post('/carts' , async(req , res)=>{
+            const addTocart = req.body;
+            console.log(addTocart)
+            const result =await cartCollection.insertOne(addTocart);
+            res.send(result);
+
+        })
 
 
 
